@@ -1,0 +1,58 @@
+ALT+ F10 - NOVA GUIA DA CONEXÃO
+show recyclebin; #mostra o que tem na lixeira
+purge recyclebin; #deleta o que tem na lixeira
+
+constraints: pode ser criada no "create table", por nível de coluna ou por nível de tabela,
+           ou pode ser criado no "alter table"
+DICA: CRIAR TABELAS COM RESTRIÇÕES NÍVEL COLUNA, SÓ DEIXAR A FK PARA DEPOIS FAZENDO POR ALTER TABLE
+
+CREATE TABLE employees
+( employee_id    NUMBER(6)    CONSTRAINT emp_employee_id  PRIMARY KEY,
+  first_name     VARCHAR2(20),
+  last_name      VARCHAR2(25) CONSTRAINT emp_last_name_nn NOT NULL,
+  email          VARCHAR2(25) CONSTRAINT emp_email_nn     NOT NULL
+                              CONSTRAINT emp_email_uk     UNIQUE,
+  phone_number   VARCHAR2(20),
+  hire_date      DATE         CONSTRAINT emp_hire_date_nn NOT NULL,
+  job_id         VARCHAR2(10) CONSTRAINT emp_job_id_nn    NOT NULL,
+  salary         NUMBER(8,2)  CONSTRAINT emp_salary_ck    CHECK (salary>0),
+  commission_pct NUMBER(2,2),
+  manager_id     NUMBER(6),
+  department_id  NUMBER(4) CONSTRAINT emp_dept_fk REFERENCES departments);
+                           **jeito de definir FK no nível coluna ** não precisa palavra FOREIGN KEY no nível coluna
+
+nível tabela: 
+CREATE TABLE employees
+( employee_id    NUMBER(6)    CONSTRAINT emp_employee_id  PRIMARY KEY,
+  first_name     VARCHAR2(20),
+  last_name      VARCHAR2(25) CONSTRAINT emp_last_name_nn NOT NULL,
+  email          VARCHAR2(25) CONSTRAINT emp_email_nn     NOT NULL
+                              CONSTRAINT emp_email_uk     UNIQUE,
+  phone_number   VARCHAR2(20),
+  hire_date      DATE         CONSTRAINT emp_hire_date_nn NOT NULL,
+  job_id         VARCHAR2(10) CONSTRAINT emp_job_id_nn    NOT NULL,
+  salary         NUMBER(8,2)  CONSTRAINT emp_salary_ck    CHECK (salary>0),
+  commission_pct NUMBER(2,2),
+  manager_id     NUMBER(6),
+  department_id  NUMBER(4)
+CONSTRAINT emp_employee_id PRIMAREY KEY(employee_id),
+CONSTRAINT emp_dept_fk FOREIGN KEY (departmente_id)
+                                REFERENCES departments(department)id));
+
+ALTER TABLE: 
+ALTER TABLE employees
+ADD CONSTRAINT emp_dept_fk
+FOREIGN KEY (departmente_id)
+  REFERENCES departments(department)id);
+
+CHAVE COMPOSTA: NÃO TEM NÍVEL COLUNA
+NÍVEL TABELA: CREATE TABLE PESSOA_F
+(RM VARCHAR(9) ,
+OE CHAR(2) ,
+NOME VARCHAR(100) NOT NULL,
+CONSTRAINT RM_EM_PK PRIMARY KEY(RM,OE);
+
+CHAVE COMPOSTA ALTER TABLE: 
+ALTER TABLE PESSOA_F
+ADD
+CONSTRAINT RM_EM_PK PRIMARY KEY(RM,OE);
