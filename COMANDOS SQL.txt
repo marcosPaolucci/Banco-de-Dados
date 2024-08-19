@@ -5,6 +5,7 @@ purge recyclebin; #deleta o que tem na lixeira
 constraints: pode ser criada no "create table", por nível de coluna ou por nível de tabela,
            ou pode ser criado no "alter table"
 DICA: CRIAR TABELAS COM RESTRIÇÕES NÍVEL COLUNA, SÓ DEIXAR A FK PARA DEPOIS FAZENDO POR ALTER TABLE
+DICA2: CONSTRAINT NOT NULL MAIS AMIGÁVEL - NÃO PRECISA NOMEAR
 
 CREATE TABLE employees
 ( employee_id    NUMBER(6)    CONSTRAINT emp_employee_id  PRIMARY KEY,
